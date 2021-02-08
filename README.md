@@ -2,16 +2,18 @@
 
 线上自动创建并接受 GitLab 合并请求，不拉代码快速合并
 
-Auto create and accept MR (merge requests) for GitLab online
+Auto create and accept MR (Merge Requests) for GitLab online
 
 
 ## 使用指南
 
 ### 配置秘钥
 
+在用户资料里看个人ID，在设置里配置“访问令牌” (access_tokens)，勾选 api 权限
+
 edit and upload
 ```
-/etc/profile/gitlab_api.sh
+/etc/profile.d/gitlab_api.sh
 ```
 
 ### 放置文件与授权
@@ -29,7 +31,7 @@ chmod 755 /var/lib/jenkins/workspace/tool/acceptMR.sh
 create item set run shell
 ```shell
 source /etc/profile 1>/dev/null 2>&1
-export CI_PROJECT_ID=你的项目数字ID
+export CI_PROJECT_ID=你的项目ID(数字)
 export CI_COMMIT_REF_NAME=源分支名
 export TARGET_BRANCH=目标分支名
 /var/lib/jenkins/workspace/tool/createMR.sh
