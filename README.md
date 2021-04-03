@@ -34,6 +34,36 @@ source /etc/profile 1>/dev/null 2>&1
 export CI_PROJECT_ID=你的项目ID(数字)
 export CI_COMMIT_REF_NAME=源分支名
 export TARGET_BRANCH=目标分支名
-/var/lib/jenkins/workspace/tool/createMR.sh
+/var/lib/jenkins/workspace/tool/createMR.sh || echo "continue execute"
 /var/lib/jenkins/workspace/tool/acceptMR.sh
+```
+
+```pipeline
+pipeline {
+    agent any
+    stages {
+        stage('createMR') {
+            steps {
+                sh"""
+                source /etc/profile 1>/dev/null 2>&1
+                export CI_PROJECT_ID=${CI_PROJECT_ID}
+                export CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME}
+                export TARGET_BRANCH=${TARGET_BRANCH}
+                /var/lib/jenkins/workspace/tool/createMR.sh || echo "continue execute"
+                """
+            }
+        }
+        stage('acceptMR') {
+            steps {
+                sh"""
+                source /etc/profile 1>/dev/null 2>&1
+                export CI_PROJECT_ID=${CI_PROJECT_ID}
+                export CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME}
+                export TARGET_BRANCH=${TARGET_BRANCH}
+                /var/lib/jenkins/workspace/tool/acceptMR.sh
+                """
+            }
+        }
+    }
+}
 ```
